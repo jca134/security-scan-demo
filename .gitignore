@@ -1,0 +1,28 @@
+# JavaScript dependencies and tooling
+node_modules/
+dist/
+.vite/
+coverage/
+
+# Previous Python development environments (the deployed app is static)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Local configuration and legacy credentials
+.env
+.env.*
+!.env.example
+credentials*.json
+token*.json
+
+# Local model weights
+*.gguf
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+test_sets/
+benchmarks/

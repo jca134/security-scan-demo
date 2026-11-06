@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="Authorize browser-only access to Google Drive for Privacy Scanner." />
+    <title>Authorize Google Drive — Privacy Scanner</title>
+    <link rel="stylesheet" href="authorize.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./">
+          <img class="brand-mark" src="images/cwru-sunburst-box.png" alt="" width="42" height="42" />
+          <span class="brand-wordmark">
+            <span class="brand-wordmark-top">Case Western Reserve</span>
+            <span class="brand-wordmark-bottom">University</span>
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">Privacy Scanner</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="auth-stage">
+      <section class="authorization-card" aria-labelledby="authorization-title">
+        <p class="eyebrow">Google Drive privacy check</p>
+        <h1 id="authorization-title">Continue with Google</h1>
+        <p id="authorization-description">Preparing the requested Drive permission…</p>
+        <div class="privacy-note">
+          <strong>Your files stay in your browser</strong>
+          <span>Google gives this tab a short-lived, read-only access pass. Privacy Scanner has no server: it keeps the pass in memory and talks to Google Drive directly from your browser.</span>
+        </div>
+        <button id="authorize-button" type="button" disabled>Authorize Google Drive</button>
+        <p id="authorization-status" role="status" aria-live="polite">Loading Google Identity Services…</p>
+        <p class="authorization-links"><a id="cancel-link" href="./">Cancel and return</a> · <a href="privacy.html">Privacy policy</a></p>
+      </section>
+    </main>
+    <script type="module" src="authorize.js"></script>
+  </body>
+</html>

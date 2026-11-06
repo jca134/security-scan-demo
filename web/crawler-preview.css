@@ -1,0 +1,22 @@
+.content-preview {
+  margin: 12px 0 0;
+  border-radius: 6px;
+  background: #eef4ff;
+  padding: 10px 12px;
+  color: #34425c;
+  font-size: .72rem;
+  line-height: 1.55;
+}
+
+.content-preview strong {
+  color: #174ea6;
+}
+
+.content-preview:not(.preview-ok) {
+  background: #f5f7fb;
+  color: #647085;
+}
+
+.content-preview:not(.preview-ok) strong {
+  color: #526179;
+}

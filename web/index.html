@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="google-site-verification" content="EhPaLbDDxi8IuVX5CqX6IpLyHMe3M1WEkqMcgOmXlC8" />
+    <meta name="description" content="Check who can see the files in a Google Drive folder." />
+    <title>Privacy Scanner</title>
+    <link rel="stylesheet" href="case.css" />
+  </head>
+  <body class="plain-ui crawler-page">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./">
+          <img class="brand-mark" src="images/cwru-sunburst-box.png" alt="" width="42" height="42" />
+          <span class="brand-wordmark">
+            <span class="brand-wordmark-top">Case Western Reserve</span>
+            <span class="brand-wordmark-bottom">University</span>
+          </span>
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">Privacy Scanner</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="hero-band">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow">Google Drive privacy check</p>
+          <h1>Secure your files.</h1>
+          <p class="lede">Scan a folder or your whole Drive. See every file that's public, shared, or private, without anything leaving your browser.</p>
+          <details class="privacy-dropdown">
+            <summary>How are my files kept private?</summary>
+            <div class="privacy-dropdown-body">
+              <p><strong>Everything is checked locally, in this browser tab.</strong> Privacy Scanner has no server, so your files are never uploaded or sent to us or anyone else.</p>
+              <ul>
+                <li>Your browser talks to Google Drive directly, using the access you approve when you sign in.</li>
+                <li><strong>Sharing only</strong> reads who has access to each file. File contents are never opened.</li>
+                <li><strong>Sharing + content</strong> reads a sample (the first 500 words unless you choose more) from files that are already shared with others and checks it with a model that runs locally on your device.</li>
+                <li><strong>Already private and restricted</strong> files are automatically skipped and never read.</li>
+                <li><strong>Nothing is saved.</strong> Close the tab and the results are gone.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <img class="hero-logo" src="images/report-logo.png" alt="" width="640" height="486" />
+        </div>
+      </div>
+    </section>
+
+    <main class="page">
+      <section class="auth-panel" aria-labelledby="auth-title">
+        <div class="auth-copy">
+          <p class="step">Step 1</p>
+          <h2 id="auth-title">Connect Google Drive</h2>
+          <fieldset id="mode-picker" class="mode-picker">
+            <legend>What should we check?</legend>
+            <label class="mode-option">
+              <input type="radio" name="scan-mode" value="sharing" checked />
+              <span><strong>Sharing only</strong><small>Who has access. File contents are not read.</small></span>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="scan-mode" value="content" />
+              <span><strong>Sharing + content</strong><small>Also flags sensitive info in shared and public files.</small></span>
+            </label>
+          </fieldset>
+          <p id="auth-status" class="panel-copy" role="status">Checking your sign-in…</p>
+        </div>
+        <div class="auth-actions">
+          <a id="login-link" class="button-link" href="authorize.html?mode=sharing" hidden>Sign in with Google</a>
+          <button id="logout-link" class="button-link secondary" type="button" hidden>Disconnect</button>
+        </div>
+      </section>
+
+      <section id="classifier" class="model-panel" aria-labelledby="classifier-title" hidden>
+        <div class="section-head">
+          <div>
+            <p class="step">Step 2</p>
+            <h2 id="classifier-title">Download the checker</h2>
+          </div>
+          <div class="model-actions">
+            <label for="model-select">Model
+              <select id="model-select">
+                <option value="gliner2.5-decide-mobile-q4f16" selected>GLiNER2.5-Decide mobile · ~345 MB</option>
+                <option value="spartan-v6">Spartan v6 · trained by our team · ~150 MB</option>
+              </select>
+            </label>
+            <button id="load-model" type="button">Download model</button>
+          </div>
+        </div>
+        <p id="model-notice" hidden></p>
+        <details class="model-about">
+          <summary>About the models</summary>
+          <dl>
+            <div data-model="gliner2.5-decide-mobile-q4f16">
+              <dt>GLiNER2.5-Decide <span>Default · ~345 MB</span></dt>
+              <dd>An open-source, general-purpose language model. It reviews each section of a file and estimates how much harm could result if that section were shared by mistake.</dd>
+            </div>
+            <div data-model="spartan-v6">
+              <dt>Spartan v6 <span>~150 MB</span></dt>
+              <dd>A model trained by our team specifically to detect sensitive information in documents.</dd>
+            </div>
+          </dl>
+          <p>Both models run entirely on your device and are downloaded only once.</p>
+        </details>
+        <div class="model-progress" aria-label="Download progress">
+          <div><strong id="model-progress-value">Not loaded</strong><span id="model-progress-detail">Downloads once, then stays cached.</span></div>
+          <div class="model-meter"><i id="model-meter-fill"></i></div>
+        </div>
+        <p id="model-status" class="model-status" role="status" aria-live="polite">Checking browser support…</p>
+        <div id="gpu-help" class="gpu-help" hidden>
+          <strong>How to fix this</strong>
+          <ol>
+            <li data-gpu-case="no-webgpu">Update to the latest version of <b>Chrome</b> or <b>Edge</b>, which support the in-browser checker. Open this page over <code>https://</code> or on <code>localhost</code>.</li>
+            <li data-gpu-case="no-adapter">Turn on hardware acceleration. In Chrome, go to <b>Settings → System</b> and turn on <b>Use graphics acceleration when available</b>, then click <b>Relaunch</b>. In Edge, it's under <b>Settings → System and performance</b>.</li>
+            <li data-gpu-case="no-adapter">Check your GPU status: paste <code>chrome://gpu</code> (or <code>edge://gpu</code>) into a new tab and look for <b>WebGPU: Hardware accelerated</b>. If it says disabled or software only, your graphics card or driver may be blocked by the browser.</li>
+            <li>Update your browser and graphics drivers, then restart your computer.</li>
+            <li data-gpu-case="no-adapter">Remote desktop sessions, virtual machines, and some battery-saver modes hide the GPU from the browser. Try again directly on your computer and plugged in.</li>
+            <li>Still stuck? Switch to <b>Sharing only</b> above, which doesn't need a GPU, or try another computer.</li>
+          </ol>
+        </div>
+        <label class="limit-field" for="word-limit">How much of each file to check
+          <select id="word-limit">
+            <option value="250">First 250 words (fastest)</option>
+            <option value="500" selected>First 500 words (recommended)</option>
+            <option value="1000">First 1,000 words</option>
+            <option value="2500">First 2,500 words</option>
+            <option value="5000">First 5,000 words</option>
+            <option value="all">Whole document (slowest)</option>
+          </select>
+        </label>
+        <p class="fine limit-help">Checking more of each file can catch sensitive details further down, but takes longer. Files over 20 MB are always skipped.</p>
+        <textarea id="classification-prompt" hidden readonly>How much harm could result if this file were shared publicly by mistake?</textarea>
+      </section>
+
+      <section id="scanner" class="scanner-panel" aria-labelledby="scanner-title" hidden>
+        <p class="step">Next</p>
+        <h2 id="scanner-title">Choose what to scan</h2>
+        <form id="scan-form">
+          <fieldset id="target-picker" class="mode-picker target-picker">
+            <legend>What should we scan?</legend>
+            <label class="mode-option">
+              <input type="radio" name="scan-target" value="folder" checked />
+              <span><strong>One folder</strong><small>A folder you paste, including its subfolders.</small></span>
+            </label>
+            <label class="mode-option">
+              <input type="radio" name="scan-target" value="drive" />
+              <span><strong>My entire Drive</strong><small>Every file you own in My Drive.</small></span>
+            </label>
+          </fieldset>
+          <div id="folder-field">
+            <label for="folder-url">Google Drive folder link</label>
+          </div>
+          <div class="folder-input-row">
+            <input id="folder-url" name="folder_url" type="url" required autocomplete="off" placeholder="https://drive.google.com/drive/folders/…" />
+            <button id="scan-button" type="submit">Scan folder</button>
+          </div>
+        </form>
+        <p id="scan-boundary" class="fine"></p>
+        <p id="scan-status" class="scan-status" role="status" aria-live="polite"></p>
+        <div id="scan-progress" class="scan-progress" hidden>
+          <div class="scan-progress-head">
+            <span id="scan-progress-label">Starting…</span>
+            <span id="scan-progress-eta"></span>
+          </div>
+          <progress id="scan-progress-bar" max="1" aria-labelledby="scan-progress-label"></progress>
+        </div>
+      </section>
+
+      <section id="results" class="results-panel" aria-labelledby="results-title" hidden>
+        <div class="results-heading">
+          <h2 id="results-title">Results</h2>
+          <strong id="file-total">0 files</strong>
+        </div>
+        <div class="risk-summary" aria-label="Summary">
+          <article class="risk-card dangerous" data-filter="SENSITIVE" role="button" tabindex="0" aria-pressed="false"><span>Sensitive</span><strong id="dangerous-count">0</strong><small id="sensitive-breakdown">0 public · 0 shared</small></article>
+          <article class="risk-card red" data-filter="RED" role="button" tabindex="0" aria-pressed="false"><span>Public</span><strong id="red-count">0</strong><small>Anyone with the link</small></article>
+          <article class="risk-card yellow" data-filter="YELLOW" role="button" tabindex="0" aria-pressed="false"><span>Shared</span><strong id="yellow-count">0</strong><small>Specific people</small></article>
+          <article class="risk-card green" data-filter="GREEN" role="button" tabindex="0" aria-pressed="false"><span>Private</span><strong id="green-count">0</strong><small>Only you</small></article>
+        </div>
+        <p id="sensitive-note" class="sensitive-note" hidden>
+          <strong>Sensitive results may include false positives.</strong>
+          They come from automated checks, so a file can be flagged when it isn't actually sensitive. Documents are processed in 100-word blocks (<span id="word-limit-note">up to the first 500 words</span>), and checking stops at the first flagged block. Open <em>Show flagged section</em> on a file to review the exact block that was flagged.
+        </p>
+        <div id="model-run" class="model-run" role="status" aria-live="polite" hidden>
+          <div class="model-run-head">
+            <span class="model-run-spinner" aria-hidden="true"></span>
+            <strong>Going through the model…</strong>
+            <span id="model-run-eta" class="model-run-eta"></span>
+          </div>
+          <p id="model-run-file" class="model-run-file">Starting the local AI model…</p>
+          <div class="model-run-bar">
+            <span id="model-run-files-label">File 0 of 0</span>
+            <progress id="model-run-files" max="1" value="0"></progress>
+          </div>
+          <div class="model-run-bar">
+            <span id="model-run-blocks-label">Sections in this file</span>
+            <progress id="model-run-blocks" max="1" value="0"></progress>
+          </div>
+        </div>
+        <div class="results-toolbar">
+          <div class="filter-chips" role="group" aria-label="Show files">
+            <button type="button" class="filter-chip" data-filter="ALL" aria-pressed="true">All <span data-count="ALL">0</span></button>
+            <button type="button" class="filter-chip" data-filter="DANGEROUS" aria-pressed="false">Sensitive &amp; public <span data-count="DANGEROUS">0</span></button>
+            <button type="button" class="filter-chip" data-filter="DANGEROUS_SHARED" aria-pressed="false">Sensitive &amp; shared <span data-count="DANGEROUS_SHARED">0</span></button>
+            <button type="button" class="filter-chip" data-filter="RED" aria-pressed="false">Public <span data-count="RED">0</span></button>
+            <button type="button" class="filter-chip" data-filter="YELLOW" aria-pressed="false">Shared <span data-count="YELLOW">0</span></button>
+            <button type="button" class="filter-chip" data-filter="GREEN" aria-pressed="false">Private <span data-count="GREEN">0</span></button>
+          </div>
+          <label class="sort-control" for="result-sort">Sort
+            <select id="result-sort">
+              <option value="exposure" selected>Most exposed first</option>
+              <option value="confidence">Highest confidence first</option>
+              <option value="exposure-asc">Least exposed first</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </label>
+        </div>
+        <div id="file-results" class="file-results"></div>
+      </section>
+
+      <p id="scope-description" hidden></p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="footer-brand">
+          <strong>Privacy Scanner</strong>
+          <details class="team-credit">
+            <summary>Built by Spartans</summary>
+            <ul>
+              <li>Jaden Aguilon</li>
+              <li>Henry Dirks</li>
+              <li>Dilan Fajardo</li>
+            </ul>
+          </details>
+        </div>
+        <span>Your files never leave your browser. · <a href="privacy.html">Privacy</a></span>
+      </div>
+    </footer>
+    <script type="module" src="crawler.js"></script>
+  </body>
+</html>

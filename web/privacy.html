@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="Privacy Scanner privacy policy and Google user data practices." />
+    <title>Privacy policy — Privacy Scanner</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="privacy.css" />
+  </head>
+  <body class="plain-ui privacy-page">
+    <main class="page">
+      <header class="mast">
+        <a class="brand" href="./">Privacy Scanner</a>
+        <span class="tagline">Privacy policy</span>
+      </header>
+
+      <article class="policy">
+        <header class="policy-heading">
+          <p class="eyebrow">Privacy Scanner / legal</p>
+          <h1>Privacy policy</h1>
+          <p class="policy-date">Last updated: November 5, 2026</p>
+          <p class="policy-summary">Privacy Scanner is a browser-only Google Drive exposure scanner built by students at Case Western Reserve University. Google Drive data is processed locally in your browser and is never sent to Privacy Scanner, its developers, or any server we operate.</p>
+        </header>
+
+        <section>
+          <h2>Google user data Privacy Scanner accesses</h2>
+          <p>You choose one of two read-only Google Drive permissions. You can start with the narrower one and grant the broader one later from the same page:</p>
+          <ul>
+            <li><strong>Sharing only</strong> uses <code>drive.metadata.readonly</code> to read file and folder metadata, owners, and sharing permissions. It cannot read file contents.</li>
+            <li><strong>Sharing + content</strong> uses <code>drive.readonly</code> to read the same metadata and, after checking sharing permissions, to download or export content from files that are shared with someone else: either anyone with the link, or specific people, groups, or a domain. Files that only the owner can access are never downloaded.</li>
+          </ul>
+          <p>You choose what to scan: the files in one folder and all of its subfolders, or every file you own in My Drive. Privacy Scanner does not request permission to create, edit, share, or delete files.</p>
+        </section>
+
+        <section>
+          <h2>How Google user data is used</h2>
+          <p>Metadata is used to show the sharing status of each scanned file. In Sharing + content mode, text is extracted from each shared file and checked for potentially sensitive information, such as medical, financial, identity, credential, student-record, or legal details. By default only the first 500 words of each file are checked; you can choose a different amount, up to the whole document. Files larger than 20 MB are skipped. Text extraction, pattern checks, and model inference all happen inside your browser.</p>
+          <p>Google user data is used only to provide the scan and the results shown to you. It is not used for advertising, profiling, training models, or any unrelated purpose.</p>
+        </section>
+
+        <section>
+          <h2>Storage and retention</h2>
+          <p>Google returns a short-lived access token directly to the authorization page. The token is placed in tab-scoped session storage only for the navigation back to the scanner, immediately removed, and then kept in memory. When you add file-content access from an open scan, the authorization window hands the token to that tab through an in-browser channel that never leaves your device. Reloading or closing the tab clears the session and requires authorization again.</p>
+          <p>File metadata, extracted content, and scan results are not uploaded to or retained by Privacy Scanner. Extracted text is removed from the page's working data after classification, except that the section of a file flagged as sensitive (at most 100 words) stays visible in your results so you can review it. Results remain only in the open tab until you disconnect, start a new scan, or close the tab. Your browser may cache public application files and model weights, but not your Google Drive files or access token.</p>
+        </section>
+
+        <section>
+          <h2>Sharing and disclosure</h2>
+          <p>Privacy Scanner does not sell, transfer, or disclose Google user data to its developers, advertisers, data brokers, or other third parties. Drive requests go directly from your browser to Google.</p>
+          <p>To run the checks on your device, your browser downloads public files from third-party hosts: model files from Hugging Face (the GLiNER2.5-Decide model and our team's Spartan v6 model), the ONNX Runtime engine from jsDelivr, and Google's sign-in library from Google. These are ordinary downloads of public files; your Drive data, file contents, and results are never included in those requests.</p>
+          <p>The website host and these providers may process ordinary connection information, such as an IP address and request headers, to deliver their files and protect their services. Privacy Scanner itself does not use cookies, analytics, an application server, or a user database.</p>
+        </section>
+
+        <section>
+          <h2>Security and your choices</h2>
+          <p>Privacy Scanner uses read-only permissions, keeps access tokens out of URLs and persistent browser storage, and processes Drive data locally. You can stop processing by disconnecting, reloading, or closing the tab. You can also revoke Privacy Scanner's access at any time from your <a href="https://myaccount.google.com/connections">Google Account's third-party connections</a>.</p>
+        </section>
+
+        <section>
+          <h2>Changes and contact</h2>
+          <p>This policy may be updated when Privacy Scanner's data practices change. The revision date at the top identifies the latest version. Questions or concerns can be submitted through the project's <a href="https://github.com/henrymdirks/FileCrawler/issues">GitHub issue tracker</a>.</p>
+        </section>
+      </article>
+
+      <footer><span>Privacy Scanner / browser-only exposure audit</span><span><a href="./">Privacy Scanner</a> · <a href="lab.html">Model lab</a> · <a href="README.md">implementation notes</a></span></footer>
+    </main>
+  </body>
+</html>

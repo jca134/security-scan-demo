@@ -1,0 +1,127 @@
+/* Sign-in page, matching the main site's CWRU design (see case.css). */
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/figtree";
+
+:root {
+  --navy: #0a1f4f;
+  --blue: #2359ef;
+  --blue-dark: #1a44bd;
+  --ink: #14213d;
+  --muted: #5b6478;
+  --line: #dfe3ea;
+  --serif: "Source Serif 4 Variable", Georgia, serif;
+  --sans: "Figtree Variable", "Helvetica Neue", Arial, sans-serif;
+  background: var(--navy);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  background: var(--navy);
+}
+
+/* Header: same gradient bar and wordmark as the homepage */
+.site-header { background: linear-gradient(90deg, #2257d8 0%, #133a9e 45%, #0a1f4f 100%); }
+.site-header-inner { display: flex; align-items: center; height: 82px; padding: 0 32px; }
+.brand { display: inline-flex; align-items: center; gap: 14px; color: #fff; text-decoration: none; }
+.brand-mark { display: block; width: 42px; height: 42px; }
+.brand-wordmark { display: grid; gap: 3px; line-height: 1; text-transform: uppercase; -webkit-font-smoothing: antialiased; }
+.brand-wordmark-top { font: 560 1.8rem/1 var(--serif); letter-spacing: .005em; }
+.brand-wordmark-bottom { font: 700 .98rem/1 var(--sans); letter-spacing: .09em; }
+.brand-divider { width: 1px; height: 40px; margin-left: 6px; background: rgba(255, 255, 255, .45); }
+.brand-name { font: 450 1.3rem/1 var(--serif); }
+
+/* Navy stage with soft glow, like the homepage banner */
+.auth-stage {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 56px 16px 72px;
+  background:
+    radial-gradient(ellipse 55% 70% at 85% 15%, rgba(56, 108, 230, .45), transparent 70%),
+    radial-gradient(ellipse 60% 80% at 10% 110%, rgba(34, 87, 216, .35), transparent 70%),
+    linear-gradient(160deg, #081a45 0%, #0c2766 55%, #12348a 100%);
+}
+
+.authorization-card {
+  position: relative;
+  width: min(560px, 100%);
+  border-radius: 4px 56px 4px 56px;
+  background: #fff;
+  padding: 44px 48px 40px;
+  box-shadow: 0 24px 60px rgba(3, 12, 40, .35);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--blue);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 14px;
+  color: #0a2a6b;
+  font: 450 clamp(2.2rem, 6vw, 3rem)/1.08 var(--serif);
+  letter-spacing: -.015em;
+}
+
+p { color: #1d2433; font-size: 1.02rem; line-height: 1.6; }
+#authorization-description { margin: 0; }
+
+.privacy-note {
+  display: grid;
+  gap: 4px;
+  margin: 24px 0;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  background: #f2f5ff;
+  padding: 14px 16px;
+}
+.privacy-note strong { color: var(--ink); font-size: .92rem; }
+.privacy-note span { color: #3a4357; font-size: .88rem; line-height: 1.55; }
+
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  background: var(--blue);
+  padding: 15px 20px;
+  color: #fff;
+  font: 700 1rem/1.2 var(--sans);
+  cursor: pointer;
+}
+button:hover:not(:disabled) { background: var(--blue-dark); }
+button:focus-visible { outline: 3px solid #c8d6fc; outline-offset: 2px; }
+button:disabled { background: #aab3c1; cursor: wait; }
+
+#authorization-status { min-height: 22px; margin: 14px 0; color: var(--muted); font-size: .88rem; }
+#authorization-status.error { border-radius: 4px; background: #fce8e6; padding: 10px 12px; color: #8a1c14; }
+
+.authorization-links { margin: 4px 0 0; font-size: .9rem; }
+.authorization-links a { color: var(--blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.authorization-links a:hover { color: var(--blue-dark); }
+
+/* Phones and the popup window used for switching modes */
+@media (max-width: 700px) {
+  .site-header-inner { height: 68px; padding: 0 16px; }
+  .brand { gap: 10px; }
+  .brand-mark { width: 32px; height: 32px; }
+  .brand-wordmark-top { font-size: 1.08rem; }
+  .brand-wordmark-bottom { font-size: .6rem; }
+  .brand-divider { height: 30px; margin-left: 2px; }
+  .brand-name { font-size: 1rem; }
+  .auth-stage { padding: 32px 16px 48px; }
+  .authorization-card { border-radius: 4px 40px 4px 40px; padding: 32px 26px 28px; }
+}
+@media (max-width: 460px) { .brand-divider, .brand-name { display: none; } }

@@ -1,0 +1,29 @@
+/*
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+
+/
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-store
+
+/index.html
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-store
+
+/lab.html
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-store
+
+# Dedicated workers must opt into the page's isolation policy too. Without this
+# rule Chrome can start the model worker but block its isolated subresources.
+/assets/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+
+/authorize.html
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Cache-Control: no-store
